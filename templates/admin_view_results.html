@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+
+<h1>ADMIN VIEW RESULTS PAGES </h1>
+
+
+    <h2>Books</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Age Demographic</th>
+                    <th> Action </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.genre }}</td>
+                    <td>{{ book.age_demographic }}</td>     
+                           
+                     
+                        <td class="align-middle text-center" style="vertical-align: middle;">
+                            <input type="button" class="show-update-fields" value="Show Update Fields">
+                            <form type="hidden" class="update-form" method="POST" action="/updateBook">
+                                <input type="hidden" name="book.isbn" value="{{ book.isbn }}">
+                                <div class="update-fields" style="display: none;">
+                                    <input type="text" name="new_title" placeholder="New Title" value="{{ book.title }}">
+                                    <input type="text" name="new_genre" placeholder="New Genre"  value="{{ book.genre }}">
+                                    <input type="text" name="new_demographics" placeholder="New Age Demographics"  value="{{ book.age_demographic }}">                                    
+                                    <input type="submit" value="Update">
+                                </div>
+                            </form>
+                            <br>
+                            <form method="POST" action="/deleteBook">
+                            <input type="hidden" name="book_isbn" value="{{ book.isbn }}">
+                            <input type="submit" value="Delete">
+                        </form>
+                        </td>
+                </tr>
+            {% endfor %}
+
+                
+            </tbody>
+        </table>
+
+        <h2>Authors</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>ISBN</th>
+                    <th> Action </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for author in authors %}
+                <tr>
+                    <td>{{ author.authorFirstName }} </td>
+                    <td>{{ author.authorLastName }}</td>
+                    <td>{{ author.isbn }}</td>            
+                     
+                        <td class="align-middle text-center" style="vertical-align: middle;">
+                            <input type="button" class="show-update-fields" value="Show Update Fields">
+                            <form type="hidden" class="update-form" method="POST" action="/updateAuthor">
+                                <input type="hidden" name="author.isbn" value="{{ author.isbn }}">
+                                <div class="update-fields" style="display: none;">
+                                    <input type="text" name="new_title" placeholder="New Title" value="{{ author.author_firstname }}">
+                                    <input type="text" name="new_genre" placeholder="New Genre"  value="{{ author.author_lastname }}">                                                                      
+                                    <input type="submit" value="Update">
+                                </div>
+                            </form>
+                            <br>
+                            <form method="POST" action="/deleteAuthor">
+                            <input type="hidden" name="author_id" value="{{ author.author_id }}: {{ author.isbn }}">
+                            <input type="submit" value="Delete">
+                        </form>
+                        </td>
+                </tr>
+            {% endfor %}
+
+                
+            </tbody>
+        </table>
+
+        <hr>
+        <h1>Add New Book</h1>
+        <form method="POST" action="/addBook">
+            <table>
+                <tr>
+                    <td><label>Title</label></td>
+                    <td><input type="text" name="title" placeholder="Title" required><br></td>
+                </tr>
+                <tr>
+                    <td><label>Genre</label></td>
+                    <td><input type="text" name="genre" placeholder="Genre"><br></td>
+                </tr>
+                <tr>
+                    <td>Age Demographics</td>
+                    <td><input type="text" name="demographics" placeholder="Age Demographics"><br> </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add Book" class="add-book-button"></td>
+                </tr>
+            </table> 
+            
+        </form>
+
+
+        <h1>Add New Author</h1>
+        <form method="POST" action="/addAuthor">
+            <table>
+                <tr>
+                    <td><label>First Name</label></td>
+                    <td><input type="text" name="author_firstname" placeholder="Title" required><br></td>
+                </tr>
+                <tr>
+                    <td><label>Last Name</label></td>
+                    <td><input type="text" name="author_lastname" placeholder="Genre"><br></td>
+                </tr>
+                <tr>
+                    <td>Books</td>
+                    <label for="cars">book by Author</label>
+                    <td>                    
+                    <select name="book_isbn">
+                    {% for book in books %}
+                    <option value="{{ book.isbn }}">{{ book.title }} </option>
+                    {% endfor %}
+                    </select>
+                 </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add Author" class="add-book-button"></td>
+                </tr>
+            </table> 
+            
+        </form>
+
+        {% endblock %}
+   

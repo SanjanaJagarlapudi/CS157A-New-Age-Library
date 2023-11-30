@@ -1,0 +1,22 @@
+<h1>YOU ARE IN PATRON VIEW RUELST PAGES </h1>
+<table>
+    <tr>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+    <th>4</th>
+    <th>6</th>
+</tr>
+
+{% for mypatron in patron_views %} 
+
+                <tr>
+                    <td>{{ mypatron.patron_id }}</td>
+                    <td>{{ mypatron.patronFirstName }}</td>
+                    <td>{{ mypatron.patronLastName }}</td>
+                    <td>{{ mypatron.patronEmail }}</td>
+                    <td>{{ mypatron.address }}</td>
+                </tr>
+                    {% endfor %}
+
+                </table>

@@ -1,36 +1,59 @@
-body, html {
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    font-family: sans-serif;
-    background-color: lightblue;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-.content {
-    margin: 0 auto;
-    width: 400px;
+
+.table{
+    padding: 30px;
+    margin-bottom: 50px;
 }
 
-table, td, th {
-    border: 1px solid #aaa;
+h1 {
+    color: #333;
+    margin-bottom: 25px;
 }
 
 table {
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
 }
 
 th {
-    height: 30px;
+    background-color: #f2f2f2;
 }
 
-td {
-    text-align: center;
-    padding: 5px;
+.Header{
+    margin-top: 25px;
 }
 
-.form {
-    margin-top: 20px;
+form {
+    margin: 10px;
 }
 
-#content {
-    width: 70%;
+button {
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+
+input[type="text"],
+input[type="number"] {
+    margin-bottom: 10px; /* Adjust this value to control the spacing */
+}
+
+input.add-book-button {
+    margin-top: 15px; /* Adjust this value to control the spacing */
+    margin-bottom: 15px;
 }

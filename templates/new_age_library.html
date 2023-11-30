@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content"> </div>
+   
+<br>
+
+<table width="80%" align="center" style="background-color:#d6eeee">
+    <tr>
+        <td colspan="2" style="text-align:center"><h1><font color="brown">New Age Library</font></h1></td>
+    </tr>
+    <tr>
+        <td>Patron View
+            <form method="POST" action="/patronView">
+                <input type="hidden" name="patron_view" value="patron_view">
+                <input type="submit" value="Patron View">
+            </form>
+
+        </td>
+        <td>Librarian View
+            <form method="POST" action="/librarianView">
+                <input type="hidden" name="librarian_view" value="librarian_view">
+                <input type="submit" value="Librarian View">
+            </form>
+        </td>
+    </tr>
+    <tr>
+    <td colspan="2" style="text-align:center">Admin View
+        <form method="POST" action="/adminView">
+            <input type="hidden" name="admin_view" value="admin_view">
+            <input type="submit" value="Admin View">
+        </form>
+    </td>
+    </tr>
+</table>
+
+
+
+{% endblock %}

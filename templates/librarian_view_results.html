@@ -1,0 +1,21 @@
+<h1>YOU ARE IN LIBRARIAN VIEW RUELST PAGES </h1>
+<table>
+    <tr>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+    <th>4</th>
+    <th>6</th>
+</tr>
+{% for mylibrarian in librarian_views %}
+
+                <tr>
+                    <td>{{ mylibrarian.librarian_id }}</td>
+                    <td>{{ mylibrarian.librarianFirstName }}</td>
+                    <td>{{ mylibrarian.librarianLastName }}</td>
+                    <td>{{ mylibrarian.librarianEmail }}</td>
+                    <td>{{ mylibrarian.address }}</td>
+                </tr>
+                    {% endfor %}
+
+                </table>
