@@ -1,0 +1,32 @@
+
+
+    
+    <h2>Books</h2>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Age Demographic</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for book in books %}
+            
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.genre }}</td>
+                <td>{{ book.age_demographic }}</td>            
+                    
+            </tr>
+        {% endfor %}                
+        </tbody>
+    </table> 
+
+

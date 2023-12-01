@@ -29,9 +29,10 @@
                     <td>{{ book.isbn }}</td>
                     <td>{{ book.title }}</td>
                     <td>{{ book.genre }}</td>
-                    <td>{{ book.age_demographic }}</td>     
+                    <td>{{ book.age_demographic }}</td> 
+                    
                            
-                     
+                
                         <td class="align-middle text-center" style="vertical-align: middle;">
                             <input type="button" class="show-update-fields" value="Show Update Fields">
                             <form type="hidden" class="update-form" method="POST" action="/updateBook">
@@ -50,9 +51,7 @@
                         </form>
                         </td>
                 </tr>
-            {% endfor %}
-
-                
+            {% endfor %}                
             </tbody>
         </table>
 
@@ -92,13 +91,149 @@
                         </form>
                         </td>
                 </tr>
-            {% endfor %}
-
+            {% endfor %}           
                 
             </tbody>
         </table>
 
-        <hr>
+        <h2>Librarians</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th> Action </th>
+                    
+                </tr>
+            </thead>
+            <tbody>               
+                
+                {% for lib in librarians %}
+                <tr>
+                    <td>{{ lib.librarianFirstName }} </td>
+                    <td>{{ lib.librarianLastName }}</td>
+                    <td>{{ lib.librarianEmail }}</td>            
+                    <td>{{ lib.librarianCity }}, {{lib.librarianState }}, {{lib.librarianZipcode }}, {{lib.librarianZipcode}}</td> 
+                        <td class="align-middle text-center" style="vertical-align: middle;">
+                            <input type="button" class="show-update-fields" value="Show Update Fields">
+                            <form type="hidden" class="update-form" method="POST" action="/updateLibrarian">
+                                <input type="hidden" name="lib.librarian_id" value="{{ lib.librarian_id }}">
+                                <div class="update-fields" style="display: none;">
+                                    <input type="text" name="new_title" placeholder="New Title" value="{{ lib.librarianFirstName  }}">
+                                    <input type="text" name="new_genre" placeholder="New Genre"  value="{{ lib.labrarianLirstName }}">                                                                      
+                                    <input type="submit" value="Update">
+                                </div>
+                            </form>
+                            <br>
+                            <form method="POST" action="/deleteLibrarian">
+                            <input type="hidden" name="librarian_id" value="{{ lib.librarian_id}}>
+                            <input type="submit" value="Delete">
+                        </form>
+                        </td>
+                </tr>
+            {% endfor %}           
+                
+            </tbody>
+        </table>
+
+
+
+
+
+        <h2>Patrons</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th> Action </th>
+                    
+                </tr>
+            </thead>
+            <tbody>               
+                
+                {% for pat in patrons %}
+                <tr>
+                    <td>{{ pat.patronFirstName }} </td>
+                    <td>{{ pat.patronLastName }}</td>
+                    <td>{{ pat.patronEmail }}</td>            
+                    <td>{{ pat.patronCity }}, {{pat.patronState }}, {{pat.patronZipcode }}, {{pat.patronCountry}}</td> 
+                        <td class="align-middle text-center" style="vertical-align: middle;">
+                            <input type="button" class="show-update-fields" value="Show Update Fields">
+                            <form type="hidden" class="update-form" method="POST" action="/updateLibrarian">
+                                <input type="hidden" name="pat.patron_id" value="{{ pat.patron_id }}">
+                                <div class="update-fields" style="display: none;">
+                                    <input type="text" name="new_title" placeholder="New Title" value="{{ pat.patronFirstName  }}">
+                                    <input type="text" name="new_genre" placeholder="New Genre"  value="{{ pat.patronLastName }}">                                                                      
+                                    <input type="submit" value="Update">
+                                </div>
+                            </form>
+                            <br>
+                            <form method="POST" action="/deletePatron">
+                            <input type="hidden" name="patron_id" value="{{ pat.patron_id}}>
+                            <input type="submit" value="Delete">
+                        </form>
+                        </td>
+                </tr>
+            {% endfor %}           
+                
+            </tbody>
+        </table>
+
+
+        <h2>Transactions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Check-Out Date</th>
+                    <th>Due Date</th>
+                    <th>Patron ID</th>
+                    <th>Librarian ID</th>
+                    <th>ISBN</th>
+                    <th> Action </th>
+                    
+                </tr>
+            </thead>
+            <tbody>               
+                
+                {% for trans in transactions %}
+                <tr>
+                    <td>{{ trans.checkoutDate }} </td>
+                    <td>{{ trans.dueDate }}</td>
+                    <td>{{ trans.patronId }}</td>
+                    <td>{{ trans.librarianId }}</td>            
+                    <td>{{ trans.txn_isbn }}</td> 
+                        <td class="align-middle text-center" style="vertical-align: middle;">
+                            <input type="button" class="show-update-fields" value="Show Update Fields">
+                            <form type="hidden" class="update-form" method="POST" action="/updateTransaction">
+                                <input type="hidden" name="trans.transaction_id" value="{{ trans.transaction_id }}">
+                                <div class="update-fields" style="display: none;">
+                                    <input type="text" name="new_title" placeholder="New Title" value="{{ trans.checkoutDate }}">
+                                    <input type="text" name="new_genre" placeholder="New Genre"  value="{{ trans.dueDate }}">                                                                      
+                                    <input type="submit" value="Update">
+                                </div>
+                            </form>
+                            <br>
+                            <form method="POST" action="/deletePatron">
+                            <input type="hidden" name="patron_id" value="{{ trans.transaction_id}}>
+                            <input type="submit" value="Delete">
+                        </form>
+                        </td>
+                </tr>
+            {% endfor %}           
+                
+            </tbody>
+        </table>
+
+
+
+
+        <hr style="height:2px;border-width:0;color:gray;background-color:rgb(210, 50, 50)">
+        <hr style="height:2px;border-width:0;color:gray;background-color:rgb(210, 50, 50)">
         <h1>Add New Book</h1>
         <form method="POST" action="/addBook">
             <table>
@@ -127,15 +262,15 @@
             <table>
                 <tr>
                     <td><label>First Name</label></td>
-                    <td><input type="text" name="author_firstname" placeholder="Title" required><br></td>
+                    <td><input type="text" name="author_firstname" placeholder="fname" required><br></td>
                 </tr>
                 <tr>
                     <td><label>Last Name</label></td>
-                    <td><input type="text" name="author_lastname" placeholder="Genre"><br></td>
+                    <td><input type="text" name="author_lastname" placeholder="lname"><br></td>
                 </tr>
                 <tr>
                     <td>Books</td>
-                    <label for="cars">book by Author</label>
+                    <label>book by Author</label>
                     <td>                    
                     <select name="book_isbn">
                     {% for book in books %}
@@ -147,9 +282,154 @@
                 <tr>
                     <td colspan="2"><input type="submit" value="Add Author" class="add-book-button"></td>
                 </tr>
-            </table> 
-            
+            </table>             
         </form>
+        
+
+       
+ <h1>Add Librarian</h1>
+ <form method="POST" action="/addLibrarian">
+     <table>
+         <tr>
+             <td><label>First Name</label></td>
+             <td><input type="text" name="librarian_firstname" placeholder="First Name" required><br></td>
+         </tr>
+         <tr>
+             <td><label>Last Name</label></td>
+             <td><input type="text" name="librarian_lastname" placeholder="Last name"><br></td>
+         </tr>
+         <tr>
+             <td><label>Email</label></td>
+             <td><input type="text" name="librarian_email" placeholder="Email"><br></td>
+         </tr>
+         <tr>
+             <td><label>City</label></td>
+             <td><input type="text" name="librarian_city" placeholder="City"><br></td>
+         </tr>
+         <tr>
+             <td><label>State</label></td>
+             <td><input type="text" name="librarian_state" placeholder="State"><br></td>
+         </tr>
+         <tr>
+             <td><label>Street</label></td>
+             <td><input type="text" name="librarian_street" placeholder="Street"><br></td>
+         </tr>
+         <tr>
+             <td><label>Country</label></td>
+             <td><input type="text" name="librarian_country" placeholder="Country"><br></td>
+         </tr>
+         <tr>
+             <td><label>Zip Code</label></td>
+             <td><input type="text" name="librarian_zipcode" placeholder="ZipCode"><br></td>
+         </tr>
+        
+         <tr>
+             <td colspan="2"><input type="submit" value="Add Librarian" class="add-book-button"></td>
+         </tr>
+     </table> 
+     
+ </form>
+
+
+
+
+ <h1>Add Patron</h1>
+ <form method="POST" action="/addPatron">
+     <table>
+         <tr>
+             <td><label>First Name</label></td>
+             <td><input type="text" name="patron_firstname" placeholder="First Name" required><br></td>
+         </tr>
+         <tr>
+             <td><label>Last Name</label></td>
+             <td><input type="text" name="patron_lastname" placeholder="Last name"><br></td>
+         </tr>
+         <tr>
+             <td><label>Email</label></td>
+             <td><input type="text" name="patron_email" placeholder="Email"><br></td>
+         </tr>
+         <tr>
+             <td><label>City</label></td>
+             <td><input type="text" name="patron_city" placeholder="City"><br></td>
+         </tr>
+         <tr>
+             <td><label>State</label></td>
+             <td><input type="text" name="patron_state" placeholder="State"><br></td>
+         </tr>
+         <tr>
+             <td><label>Street</label></td>
+             <td><input type="text" name="patron_street" placeholder="Street"><br></td>
+         </tr>
+         <tr>
+             <td><label>Country</label></td>
+             <td><input type="text" name="patron_country" placeholder="Country"><br></td>
+         </tr>
+         <tr>
+             <td><label>Zip Code</label></td>
+             <td><input type="text" name="patron_zipcode" placeholder="ZipCode"><br></td>
+         </tr>
+        
+         <tr>
+             <td colspan="2"><input type="submit" value="Add Patron" class="add-book-button"></td>
+         </tr>
+     </table> 
+     
+ </form>
+
+ <h1>Add New Transaction</h1>
+        <form method="POST" action="/addTransaction">
+            <table>
+                <tr>
+                    <td><label>Check-Out Date</label></td>
+                    <td><input type="text" name="transaction_checkoutDate" placeholder="checkout" required><br></td>
+                </tr>
+                <tr>
+                    <td><label>Due Date</label></td>
+                    <td><input type="text" name="transaction_dueDate" placeholder="duedate"><br></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <table>
+                        <tr>
+                            <td><label>Books</label></td>
+                            <td> <select name="t_book_isbn">
+                                {% for book in books %}
+                                <option value="{{ book.isbn }}">{{ book.title }} </option>
+                                {% endfor %}
+                                </select>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td><label>Librarian</label></td>
+                            <td> <select name="t_librarian_id">
+                                {% for lib in librarians %}
+                                <option value="{{ lib.librarian_id }}">{{ lib.librarianFirstName }}  {{ lib.librarianLastName }}</option>
+                                {% endfor %}
+                                </select>
+                                </td>
+
+                        </tr>
+                        <tr>
+                            <td><label>Patron</label></td>
+                            <td> <select name="t_patron_id">
+                                {% for patron in patrons %}
+                                <option value="{{ patron.patron_id }}">{{ patron.patronFirstName }}  {{ patron.patronLastName }}</option>
+                                {% endfor %}
+                                </select>
+                                </td>
+
+                        </tr>
+
+                    </table>
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add transaction" class="add-book-button"></td>
+                </tr>
+            </table>             
+        </form>
+
 
         {% endblock %}
    

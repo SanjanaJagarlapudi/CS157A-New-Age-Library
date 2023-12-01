@@ -1,22 +1,114 @@
-<h1>YOU ARE IN PATRON VIEW RUELST PAGES </h1>
 <table>
     <tr>
-    <th>1</th>
-    <th>2</th>
-    <th>3</th>
-    <th>4</th>
-    <th>6</th>
-</tr>
+        <td>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Age Demographic</th>
+                       
+                        
+                    </tr>
+                </thead>
+                
+                    
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.isbn }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>{{ book.age_demographic }}</td>           
+                               
+                    
+                           
+                    </tr>
+                {% endfor %}                
+                
+            </table>
+        </td>
+        <td  valign="top">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>ISBN</th>
+                       
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for author in authors %}
+                    <tr>
+                        <td>{{ author.authorFirstName }} </td>
+                        <td>{{ author.authorLastName }}</td>
+                        <td>{{ author.isbn }}</td>            
+                         
+                            
+                    </tr>
+                {% endfor %}           
+                    
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
 
-{% for mypatron in patron_views %} 
 
-                <tr>
-                    <td>{{ mypatron.patron_id }}</td>
-                    <td>{{ mypatron.patronFirstName }}</td>
-                    <td>{{ mypatron.patronLastName }}</td>
-                    <td>{{ mypatron.patronEmail }}</td>
-                    <td>{{ mypatron.address }}</td>
-                </tr>
-                    {% endfor %}
 
-                </table>
+<h2>Books</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Age Demographic</th>
+           
+            
+        </tr>
+    </thead>
+    
+        
+        {% for book in books %}
+        <tr>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.age_demographic }}</td>           
+                   
+        
+               
+        </tr>
+    {% endfor %}                
+    
+</table>
+
+<h2>Authors</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>ISBN</th>
+           
+            
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.authorFirstName }} </td>
+            <td>{{ author.authorLastName }}</td>
+            <td>{{ author.isbn }}</td>            
+             
+                
+        </tr>
+    {% endfor %}           
+        
+    </tbody>
+</table>
