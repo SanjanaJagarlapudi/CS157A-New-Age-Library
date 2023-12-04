@@ -154,7 +154,7 @@
                     <td>{{ lib.librarianFirstName }} </td>
                     <td>{{ lib.librarianLastName }}</td>
                     <td>{{ lib.librarianEmail }}</td>            
-                    <td>{{ lib.librarianCity }}, {{lib.librarianState }}, {{lib.librarianZipcode }}, {{lib.librarianZipcode}}</td> 
+                    <td>{{lib.librarianStreet}}, {{lib.librarianCity }}, {{lib.librarianState }}, {{lib.librarianZipcode }}, {{lib.librarianCountry}}</td> 
                         <td class="align-middle text-center" style="vertical-align: middle;">
                             <input type="button" class="show-update-fields" value="Show Update Fields">
                             <form type="hidden" class="update-form" method="POST" action="/updateLibrarian">
@@ -199,7 +199,7 @@
                     <td>{{ pat.patronFirstName }} </td>
                     <td>{{ pat.patronLastName }}</td>
                     <td>{{ pat.patronEmail }}</td>            
-                    <td>{{ pat.patronCity }}, {{pat.patronState }}, {{pat.patronZipcode }}, {{pat.patronCountry}}</td> 
+                    <td>{{ pat.patronStreet }}, {{ pat.patronCity }}, {{pat.patronState }}, {{pat.patronZipcode }}, {{pat.patronCountry}}</td> 
                         <td class="align-middle text-center" style="vertical-align: middle;">
                             <input type="button" class="show-update-fields" value="Show Update Fields">
                             <form type="hidden" class="update-form" method="POST" action="/updateLibrarian">
