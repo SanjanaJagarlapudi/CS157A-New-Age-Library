@@ -116,7 +116,7 @@ def displayPatronView():
     ).all()
     
     #filter(        Book.isbn == TransactionHistory.txn_isbn         #Author.isbn == TransactionHistory.txn_isbn,        ).
-    return render_template("patern_view_results.html", ibrarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions, patronQuery=patronQuery) 
+    return render_template("patern_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions, patronQuery=patronQuery) 
 
 
 @app.route("/librarianView", methods=["GET", "POST"])
