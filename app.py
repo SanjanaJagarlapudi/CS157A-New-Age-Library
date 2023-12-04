@@ -106,16 +106,40 @@ def displayPatronView():
     books = Book.query.all()
     patrons = Patron.query.all()    
     authors = Author.query.all()
-    transactions = TransactionHistory.query.all()     
-   
-    return render_template("patern_view_results.html", ibrarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions) 
+    transactions = TransactionHistory.query.all()        
+
+    session = db.session()
+    patronQuery = session.query(
+         Book, Author
+    ).filter(
+         Author.isbn == Book.isbn,    
+    ).all()
+    
+    #filter(        Book.isbn == TransactionHistory.txn_isbn         #Author.isbn == TransactionHistory.txn_isbn,        ).
+    return render_template("patern_view_results.html", ibrarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions, patronQuery=patronQuery) 
 
 
 @app.route("/librarianView", methods=["GET", "POST"])
-def displayLibrarianView():
-    clickVaule = request.form.get("librarian_view")
-    librarian_views = Librarian.query.all()
-    return render_template("librarian_view_results.html", librarian_views=librarian_views )
+def displayLibrarianView():     
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+    session = db.session()
+    librarianQuery = session.query(
+         Book, Author, Patron, Librarian, TransactionHistory
+    ).filter(
+         Author.isbn == Book.isbn,    
+    ).filter(
+         Librarian.librarian_id == TransactionHistory.librarianId,    
+    ).filter(
+         Patron.patron_id == TransactionHistory.patronId,    
+    ).filter(
+         TransactionHistory.txn_isbn == Book.isbn,    
+    ).all()
+    
+    return render_template("librarian_view_results.html",  ibrarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions, librarianQuery=librarianQuery )
 
 
 @app.route("/adminView", methods=["GET", "POST"])
@@ -125,7 +149,16 @@ def displayAdminView():
     patrons = Patron.query.all()    
     authors = Author.query.all()
     transactions = TransactionHistory.query.all()
-    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
+    session = db.session()
+    adminQuery = session.query(
+         Patron, Librarian, TransactionHistory
+    ).filter(
+         Patron.patron_id == TransactionHistory.patronId,    
+    ).filter(
+         Librarian.librarian_id == TransactionHistory.librarianId,    
+    ).all() 
+  
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions, adminQuery=adminQuery )
 
 
 @app.route("/searchTables", methods=["GET", "POST"])
@@ -156,19 +189,89 @@ def search():
             books = Book.query.filter_by(age_demographic=search_field_value)
             print(books)
             return render_template("search_results.html" , books=books)
-            
+    if table_name == 'Author':
+        if search_field == 'afname':
+            authors = Author.query.filter_by(authorFirstName=search_field_value)
+            return render_template("search_results.html" , authors=authors)
+        if search_field == 'alname':
+            authors = Author.query.filter_by(authorLastName=search_field_value)
+            return render_template("search_results.html" , authors=authors)
+        if search_field == 'authorid':
+            authors = Author.query.filter_by(author_id= int(search_field_value))
+            return render_template("search_results.html" , authors=authors)
+        if search_field == 'aisbn':
+            authors = Author.query.filter_by(isbn=search_field_value)
+            return render_template("search_results.html" , authors=authors)
+
         books = Book.query.filter_by(isbn=int(search_field_value))
         return render_template("search_results.html" , books=books)
-        print (books)
+    
+    if table_name == 'Patron':
+        if search_field == 'pfname':
+            patrons = Patron.query.filter_by(patronFirstName=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'plname':
+            patrons = Patron.query.filter_by(patronLastName=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'patronid':
+            patrons = Patron.query.filter_by(patron_id= int(search_field_value))
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pemail':
+            patrons = Patron.query.filter_by(patronEmail=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pcity':
+            patrons = Patron.query.filter_by(patronCity=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pstate':
+            patrons = Patron.query.filter_by(patronState=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pstreet':
+            patrons = Patron.query.filter_by(patronStreet=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pcountry':
+            patrons = Patron.query.filter_by(patronCountry=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)
+        if search_field == 'pzip_code':
+            patrons = Patron.query.filter_by(patronZipcode=search_field_value)
+            return render_template("search_results.html" , patrons=patrons)        
+        
+    if table_name == 'Librarian':
+        if search_field == 'lfname':
+            librarians = Librarian.query.filter_by(librarianFirstName=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'llname':
+            librarians = Librarian.query.filter_by(librarianLastName=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'librarianid':
+            librarians = Librarian.query.filter_by(librarian_id= int(search_field_value))
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lemail':
+            librarians= Librarian.query.filter_by(librarianEmail=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lcity':
+            librarians = Librarian.query.filter_by(librarianCity=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lstate':
+            librarians = Librarian.query.filter_by(plibrarianState=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lstreet':
+            librarians = Librarian.query.filter_by(plibrarianStreet=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lcountry':
+            librarians = Librarian.query.filter_by(librarianCountry=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+        if search_field == 'lzip_code':
+            librarians = Librarian.query.filter_by(librarianZipcode=search_field_value)
+            return render_template("search_results.html" , librarians=librarians)
+
+
+
+        books = Book.query.filter_by(isbn=int(search_field_value))
+        return render_template("search_results.html" , books=books)
+        
 
     return render_template("search_results.html" , books=books)
 
-'''@app.route("/", methods=["GET", "POST"])
-def index():
-    books = Book.query.all()
-    print(books)
-   
-    return render_template("index.html", books=books)'''
 
 #TO ADD NEW BOOKS
 @app.route("/addBook", methods=["GET", "POST"])
@@ -181,10 +284,16 @@ def update_book_table():
     db.session.add(new_book)
     db.session.commit()
 
-    return redirect("/")
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
 
 @app.route("/deleteBook", methods=["POST"])
-def delete():
+def deleteBook():
     isbn = request.form.get("book_isbn")
     # Retrieve the book from the database using the book_id
     book = Book.query.get(isbn)
@@ -192,7 +301,14 @@ def delete():
         # If the book exists, delete it from the database
         db.session.delete(book)
         db.session.commit()
-    return redirect("/")
+    
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
 
 @app.route("/updateBook", methods=["POST"])
 def updateBook():
@@ -230,9 +346,27 @@ def addAuthor():
   
     return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
 
-##Sanjana's Code starts from here: 
-#Patron Functionalities
+#Delete Author
+@app.route("/deleteAuthor", methods=["POST"])
+def deleteAuthor():
+    aid = request.form.get("author_id")
+    # Retrieve the book from the database using the book_id
+    author = Author.query.get(aid)
+    if author:
+        # If the book exists, delete it from the database
+        db.session.delete(author)
+        db.session.commit()
+    
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
 
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
+
+
+#Add New Patron
 @app.route("/addPatron", methods=["GET", "POST"])
 def addPatron():
     fname = request.form.get("patron_firstname")
@@ -257,6 +391,24 @@ def addPatron():
     transactions = TransactionHistory.query.all()
     return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions = transactions )
  
+@app.route("/deletePatron", methods=["POST"])
+def deletePatron():
+    pid = request.form.get("patron_id")
+    # Retrieve the book from the database using the book_id
+    patron = Patron.query.get(pid)
+    if patron:
+        # If the book exists, delete it from the database
+        db.session.delete(patron)
+        db.session.commit()
+    
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
+
 #Librarian Functionalities
 
 @app.route("/addLibrarian", methods=["GET", "POST"])
@@ -283,6 +435,24 @@ def addLibrarian():
     transactions = TransactionHistory.query.all()
     return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions = transactions )
  
+@app.route("/deleteLibrarian", methods=["POST"])
+def deleteLibrarian():
+    lid = request.form.get("librarian_id")
+    # Retrieve the book from the database using the librarian_id
+    librarian = Librarian.query.get(lid)
+    if librarian:
+        # If the book exists, delete it from the database
+        db.session.delete(librarian)
+        db.session.commit()
+    
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
+
  #Transaction Functionalities
 @app.route("/addTransaction", methods=["GET", "POST"])
 def addTransaction():
@@ -306,6 +476,24 @@ def addTransaction():
   #  admin_views5 = Address.query.all()
     return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions = transactions )
  
+@app.route("/deleteTransaction", methods=["POST"])
+def deleteTransaction():
+    tid = request.form.get("transaction_id")
+    # Retrieve the book from the database using the book_id
+    transaction = TransactionHistory.query.get(tid)
+    if transaction:
+        # If the book exists, delete it from the database
+        db.session.delete(transaction)
+        db.session.commit()
+    
+    librarians = Librarian.query.all()
+    books = Book.query.all()
+    patrons = Patron.query.all()    
+    authors = Author.query.all()
+    transactions = TransactionHistory.query.all()
+
+    return render_template("admin_view_results.html", librarians=librarians, books=books, patrons=patrons, authors=authors, transactions=transactions )
+
 def create_tables():
     with app.app_context():
         db.create_all()

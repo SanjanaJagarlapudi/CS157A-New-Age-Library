@@ -6,9 +6,50 @@
 
 {% block body %}
 
+<a href="/" align="right">Home Page</a>
+<h1>Admin View </h1> 
+<table border="1">
+    <tr>  
+   
+    <th>Patron First Name</th>
+    <th>Patron Last Name</th>
+    <th>Patron Email</th>
+    <th>Librarian First Name</th>
+    <th>Librarian Last Name</th>
+    <th>Transaction ID</th>
+    <th>Transacion Checkout Date</th>
+    <th>Transacion Due Date</th>
+</tr>
+    {% for join in adminQuery %}
+    <tr>        
+        {% if Patron == join[0].Patron %} 
+            {% set patronview = join[0] %}
+        <td>{{ patronview.patronFirstName }} </td>
+        <td>{{ patronview.patronLastName }}</td>
+        <td>{{ patronview.patronEmail }}</td>
+        {% endif %}
 
-<h1>ADMIN VIEW RESULTS PAGES </h1>
+                    
+        {% if Librarian == join[1].Librarian %} 
+        {% set librarianview = join[1] %}
+        <td>{{ librarianview.librarianFirstName }}</td>
+        <td>{{ librarianview.librarianLastName }}</td>       
+       {% endif %}
+        
+        {% if TransactionHistory == join[2].TransactionHistory %} 
+        {% set txnview = join[2] %}
+        <td>{{ txnview.transactionId}}</td> 
+        <td>{{ txnview.checkoutDate}}</td> 
+        <td>{{ txnview.dueDate}}</td> 
+        {% endif %}
+                   
+                    
+    </tr>        
+    {% endfor %}
+                </table>
 
+<hr style="height:2px;border-width:0;color:gray;background-color:rgb(210, 50, 50)">
+<hr style="height:2px;border-width:0;color:gray;background-color:rgb(210, 50, 50)">
 
     <h2>Books</h2>
         <table>
@@ -43,8 +84,7 @@
                                     <input type="text" name="new_demographics" placeholder="New Age Demographics"  value="{{ book.age_demographic }}">                                    
                                     <input type="submit" value="Update">
                                 </div>
-                            </form>
-                            <br>
+                            </form>                            
                             <form method="POST" action="/deleteBook">
                             <input type="hidden" name="book_isbn" value="{{ book.isbn }}">
                             <input type="submit" value="Delete">
@@ -83,10 +123,9 @@
                                     <input type="text" name="new_genre" placeholder="New Genre"  value="{{ author.author_lastname }}">                                                                      
                                     <input type="submit" value="Update">
                                 </div>
-                            </form>
-                            <br>
+                            </form>                           
                             <form method="POST" action="/deleteAuthor">
-                            <input type="hidden" name="author_id" value="{{ author.author_id }}: {{ author.isbn }}">
+                            <input type="hidden" name="author_id" value="{{ author.author_id }}">
                             <input type="submit" value="Delete">
                         </form>
                         </td>
@@ -125,10 +164,9 @@
                                     <input type="text" name="new_genre" placeholder="New Genre"  value="{{ lib.labrarianLirstName }}">                                                                      
                                     <input type="submit" value="Update">
                                 </div>
-                            </form>
-                            <br>
+                            </form>                            
                             <form method="POST" action="/deleteLibrarian">
-                            <input type="hidden" name="librarian_id" value="{{ lib.librarian_id}}>
+                            <input type="hidden" name="librarian_id" value="{{ lib.librarian_id}}">
                             <input type="submit" value="Delete">
                         </form>
                         </td>
@@ -171,10 +209,9 @@
                                     <input type="text" name="new_genre" placeholder="New Genre"  value="{{ pat.patronLastName }}">                                                                      
                                     <input type="submit" value="Update">
                                 </div>
-                            </form>
-                            <br>
+                            </form>                            
                             <form method="POST" action="/deletePatron">
-                            <input type="hidden" name="patron_id" value="{{ pat.patron_id}}>
+                            <input type="hidden" name="patron_id" value="{{ pat.patron_id}}">
                             <input type="submit" value="Delete">
                         </form>
                         </td>
@@ -216,10 +253,9 @@
                                     <input type="text" name="new_genre" placeholder="New Genre"  value="{{ trans.dueDate }}">                                                                      
                                     <input type="submit" value="Update">
                                 </div>
-                            </form>
-                            <br>
-                            <form method="POST" action="/deletePatron">
-                            <input type="hidden" name="patron_id" value="{{ trans.transaction_id}}>
+                            </form>                            
+                            <form method="POST" action="/deleteTransaction">
+                            <input type="hidden" name="transaction_id" value="{{ trans.transaction_id }}">
                             <input type="submit" value="Delete">
                         </form>
                         </td>
@@ -380,11 +416,11 @@
         <form method="POST" action="/addTransaction">
             <table>
                 <tr>
-                    <td><label>Check-Out Date</label></td>
+                    <td><label>Check-Out Date (<i><font color="red">allowed format: Dec 1 2023</font></i>)</label></td>
                     <td><input type="text" name="transaction_checkoutDate" placeholder="checkout" required><br></td>
                 </tr>
                 <tr>
-                    <td><label>Due Date</label></td>
+                    <td><label>Due Date</label>(<i><font color="red">allowed format: Dec 1 2023</font></i>)</td>
                     <td><input type="text" name="transaction_dueDate" placeholder="duedate"><br></td>
                 </tr>
                 <tr>
